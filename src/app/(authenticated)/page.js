@@ -1,3 +1,4 @@
+import { signOut } from "@/lib/auth";
 
 export default function Home() {
   return (
