@@ -12,10 +12,10 @@ async function AuthenticatedLayout({ children }) {
   return (
     <div>
       <div className=" p-6">
-        <UserAvatar/>
+        <UserAvatar />
       </div>
       {children}
-      <Navbar/>
+      <Navbar />
     </div>
   );
 }
