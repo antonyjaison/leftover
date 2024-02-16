@@ -24,10 +24,10 @@ const Location = () => {
   return (
     <button onClick={getCurrentLocation} className='flex flex-col justify-center items-center'>
         <p className=' text-[#8E8E8E] text-sm'>Location</p>
-        <span className=' flex'>
+        <div className=' flex'>
             <img src="/svg/location.svg" alt="location" />
-            <p className='text-[#1A1A1A] text-base'>Bangalore, KA</p>
-        </span>
+            <span className='text-[#1A1A1A] text-base'>Bangalore, KA</span>
+        </div>
     </button>
   )
 }
