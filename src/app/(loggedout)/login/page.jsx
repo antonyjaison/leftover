@@ -1,7 +1,9 @@
+import SignInButton from "@/components/SignInButton";
+import { signIn } from "@/lib/auth";
 import Link from "next/link";
 import React from "react";
 
-const page = () => {
+const LoginPage = () => {
   return (
     <div
       className={`bg-[url('/images/login.svg')] w-full h-[100vh] bg-cover overflow-hidden p-7 flex flex-col justify-end`}
@@ -14,16 +16,18 @@ const page = () => {
       </div>
 
       <div>
-        <button className="bg-[#224E38] w-full flex rounded-md p-3 items-center justify-center gap-4 mt-16 mb-7">
+        <SignInButton
+          className="bg-[#224E38] w-full flex rounded-md p-3 items-center justify-center gap-4 mt-16 mb-7"
+        >
           <img src="/svg/google.svg" alt="google" />
           <p className=" text-white text-sm font-normal">Login with google</p>
-        </button>
+        </SignInButton>
         <Link className=" text-white" href="/signup">
-          Don't have an account?
+          Don&apos;t have an account?
         </Link>
       </div>
     </div>
   );
 };
 
-export default page;
+export default LoginPage;
