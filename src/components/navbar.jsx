@@ -27,8 +27,8 @@ const Navbar = () => {
         <Link href="/">
           <Home size={24} color={isActive("/") ? "#224E38" : "#000"} />
         </Link>
-        <Link href="/cart">
-          <History size={24} color={isActive("/cart") ? "#224E38" : "#000"} />
+        <Link href="/request-pickup">
+          <History size={24} color={isActive("/request-pickup") ? "#224E38" : "#000"} />
         </Link>
         <Link href="/store">
           <Store size={24} color={isActive("/store") ? "#224E38" : "#000"} />
