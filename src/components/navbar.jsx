@@ -1,6 +1,13 @@
 "use client";
 
-import { Home, NotebookText, LineChart, MessageCircleMore } from "lucide-react";
+import {
+  Home,
+  NotebookText,
+  LineChart,
+  MessageCircleMore,
+  History,
+  Store,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -20,14 +27,11 @@ const Navbar = () => {
         <Link href="/">
           <Home size={24} color={isActive("/") ? "#224E38" : "#000"} />
         </Link>
-        <Link href="/store">
-          <NotebookText
-            size={24}
-            color={isActive("/store") ? "#224E38" : "#000"}
-          />
-        </Link>
         <Link href="/cart">
-          <LineChart size={24} color={isActive("/cart") ? "#224E38" : "#000"} />
+          <History size={24} color={isActive("/cart") ? "#224E38" : "#000"} />
+        </Link>
+        <Link href="/store">
+          <Store size={24} color={isActive("/store") ? "#224E38" : "#000"} />
         </Link>
         <Link href="/chat">
           <MessageCircleMore
