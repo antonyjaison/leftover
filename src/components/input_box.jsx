@@ -19,9 +19,9 @@ const InputBox = ({ placeholder, value, type, onChange }) => {
         className="w-full bg-white rounded-2xl border-[#707070] border-solid border px-6 py-4"
         onChange={onChange}
       />
-      <p className="absolute top-[-12px] px-2 left-4 bg-white text-[#707070] text-base">
+      <span className="absolute top-[-12px] px-2 left-4 bg-white text-[#707070] text-base">
         {placeholder}
-      </p>
+      </span>
 
       {type === 'password' && (
         <button
