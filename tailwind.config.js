@@ -71,6 +71,10 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      backgroundImage: {
+        'login': "url('/images/login.svg')",
+        'signup': "url('/images/signup.svg')",
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],
