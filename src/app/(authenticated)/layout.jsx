@@ -1,6 +1,7 @@
 import Navbar from "@/components/navbar";
 import UserAvatar from "@/components/user_avatar";
 import { auth } from "@/lib/auth";
+import LocationProvider from "@/providers/LocationProvider";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -11,11 +12,13 @@ async function AuthenticatedLayout({ children }) {
   }
   return (
     <div>
-      <div className=" p-6">
-        <UserAvatar />
-      </div>
-      {children}
-      <Navbar />
+      <LocationProvider>
+        <div className=" p-6">
+          <UserAvatar />
+        </div>
+        {children}
+        <Navbar />
+      </LocationProvider>
     </div>
   );
 }
