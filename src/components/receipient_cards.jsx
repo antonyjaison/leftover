@@ -1,6 +1,7 @@
 import React from "react";
 import Receipientcard from "./receipient_card";
 import FoodRequest from "@/models/foodrequest.model";
+import { dbConnect } from "@/lib/db";
 
 const ReceipientCards = async () => {
   await dbConnect();
@@ -21,8 +22,9 @@ const ReceipientCards = async () => {
               name={request.foodName}
               quantity={request.quantity}
               status={request.status}
-              date={request.createdAt.toDateString()}
+              date={request.preparedAt.toDateString()}
               id={request._id.toString()}
+              type={request.type}
             />
           ))}
         </>
