@@ -23,10 +23,21 @@ const FoodRequestSchema = new Schema({
     },
     status: {
         type: String,
-        enum: ["open", "ordered","finished"],
+        enum: ["open", "picking","picked"],
         default: "open"
     },
     foodPic: {
+        type: String,
+    },
+    lat: {
+        type: Number,
+        required: true
+    },
+    lon: {
+        type: Number,
+        required: true
+    },
+    pickedBy: {
         type: String,
     }
 }, {

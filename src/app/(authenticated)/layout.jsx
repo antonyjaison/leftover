@@ -1,9 +1,10 @@
-import Navbar from "@/components/navbar";
+
 import UserAvatar from "@/components/user_avatar";
 import { auth } from "@/lib/auth";
 import LocationProvider from "@/providers/LocationProvider";
 import { redirect } from "next/navigation";
 import React from "react";
+import Navbar from "../../components/navbar";
 
 async function AuthenticatedLayout({ children }) {
   const session = await auth();
