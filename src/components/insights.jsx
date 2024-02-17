@@ -1,26 +1,29 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Image from "next/image";
+import InsightChart from "./insight_chart";
 
-const Insights = async () => {
-  const api = process.env.GEMINI_API;
+const Insights = ({ uid }) => {
+  const [insightData, setInsightData] = useState([]);
 
-  console.log(api + "/get_insights");
+  useEffect(() => {
+    const getInsights = async () => {
+      const api = process.env.NEXT_PUBLIC_GEMINI_API;
+      const res = await axios.post(api + "/get_insights", {
+        uid: uid,
+      });
 
-  const res = await axios.post(api + "/get_insights", {
-    uid:"65cf8550092ab59d821d880c"
-  });
-  
-  console.log(res);
+      setInsightData(res.data);
+    };
+    getInsights();
+  }, []);
+
+  console.log(insightData);
 
   return (
     <div>
-      <Image
-        src="/images/insight.png"
-        width={280}
-        height={165}
-        alt="Insights"
-      />
+      <InsightChart data={insightData} />
     </div>
   );
 };
