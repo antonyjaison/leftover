@@ -6,7 +6,7 @@ import { Badge } from "./ui/badge";
 import { cn } from "@/lib/utils";
 
 
-const Receipientcard = ({ name, createdAt, quantity, id, coord}) => {
+const Receipientcard = ({ name, date, quantity, id, coord, type}) => {
 
   async function handleConfirmPickup() {
     try {
