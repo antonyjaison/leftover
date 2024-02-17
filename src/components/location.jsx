@@ -1,35 +1,42 @@
-'use client'
+"use client";
 
-import React from 'react'
+import axios from "axios";
+import React, { useState } from "react";
+import { useGeolocation } from "@uidotdev/usehooks";
 
 const Location = () => {
+  const [address, setAddress] = useState([]);
+  const location = useGeolocation();
 
-    const getCurrentLocation = () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-            console.log("Geolocation is not supported by this browser.");
-        }
+  const getCurrentLocation = async () => {
+    const { latitude, longitude } = location;
+    console.log("hello");
+
+    try {
+      const res = await axios.post("/api/location/address", {
+        lat: latitude,
+        lon: longitude,
+      });
+      setAddress(res.data.address.split(","));
+    } catch (error) {
+      console.error("Error fetching address:", error.message);
     }
-
-    const showPosition = (position) => {
-        let latitude = position.coords.latitude;
-        let longitude = position.coords.longitude;
-        console.log('latitude', latitude, 'longitude', longitude)
-
-        // api call to get location
-    }
-
+  };
 
   return (
-    <button onClick={getCurrentLocation} className='flex flex-col justify-center items-center'>
-        <p className=' text-[#8E8E8E] text-sm'>Location</p>
-        <span className=' flex'>
-            <img src="/svg/location.svg" alt="location" />
-            <p className='text-[#1A1A1A] text-base'>Bangalore, KA</p>
+    <button
+      onClick={() => getCurrentLocation()}
+      className="flex flex-col justify-center items-center"
+    >
+      <p className=" text-[#8E8E8E] text-sm">Location</p>
+      {address.length > 0 && (
+        <span className=" flex">
+          <img src="/svg/location.svg" alt="location" />
+          <p className="text-[#1A1A1A] text-base">{`${address[1]}, ${address[0]}`}</p>
         </span>
+      )}
     </button>
-  )
-}
+  );
+};
 
-export default Location
+export default Location;
