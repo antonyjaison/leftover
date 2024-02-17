@@ -27,9 +27,10 @@ const ReceipientCards = async () => {
               name={request.foodName}
               quantity={request.quantity}
               status={request.status}
-              date={request.createdAt.toDateString()}
+              date={request.preparedAt.toDateString()}
               id={request._id.toString()}
               coord={[request.lat, request.lon]}
+              type={request.type}
             />
           ))}
         </>

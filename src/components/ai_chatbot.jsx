@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Rocket } from "lucide-react";
@@ -13,32 +13,36 @@ function AiChatBot() {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([
     {
-      from:"bot",
-      message:"Hello, I am crumbsAI®. How can I help you ?"
-    }
-  ])
+      from: "bot",
+      message: "Hello, I am crumbsAI®. How can I help you ?",
+    },
+  ]);
 
   const addMessage = (from, message) => {
     setMessages((prev) => [...prev, { from, message }]);
   };
-  
-  const url = process.env.NEXT_PUBLIC_GEMINI_API  
 
-  console.log(url)
+  const url = process.env.NEXT_PUBLIC_GEMINI_API;
+
+  console.log(url);
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("hello")
+    console.log("hello");
     setLoading(true);
 
-    if(input.trim() === "") return;
+    if (input.trim() === "") return;
     addMessage("user", input);
 
-    axios.post(url + "/chat", {
-      message: input,
-    }).then((res) => {
-      addMessage("bot", res.data);
-    }).catch(err => console.log(err)).finally(() => setLoading(false));
+    axios
+      .post(url + "/chat", {
+        message: input,
+      })
+      .then((res) => {
+        addMessage("bot", res.data);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
     setInput("");
   }
   return (
@@ -54,14 +58,17 @@ function AiChatBot() {
       </div>
       <form onSubmit={handleSubmit}>
         <input
-        disabled={loading}
+          disabled={loading}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className="bg-white border-[#707070]  border px-6 py-3 fixed w-[87%] md:w-[90%] bottom-[6rem] rounded-sm "
           type="text"
           placeholder="Type or say to begin chat..."
         />
-        <button disabled={loading} className="fixed bottom-[6rem] right-[10%] -translate-y-3 bg-[#1A4CD3] text-white p-2 rounded-sm">
+        <button
+          disabled={loading}
+          className="fixed bottom-[6rem] right-[10%] -translate-y-3 bg-[#1A4CD3] text-white p-2 rounded-sm"
+        >
           <Rocket size={12} />
         </button>
       </form>
@@ -70,13 +77,16 @@ function AiChatBot() {
 }
 
 function Message({ from, message }) {
-    const { data } = useSession()
-    const userImage = data?.user?.image
+  const { data } = useSession();
+  const userImage = data?.user?.image;
   return (
-    <div className={twMerge("flex flex-col w-[90%] gap-1.5 rounded-[0.9375rem] border border-[#8D8D8D] p-5 text-[0.69156rem]",
-    from === "bot" && "mr-auto",
-    from === "user" && "translate-x-[30px] bg-[#224E38]"
-    )}>
+    <div
+      className={twMerge(
+        "flex flex-col w-[90%] gap-1.5 rounded-[0.9375rem] border border-[#8D8D8D] p-5 text-[0.69156rem]",
+        from === "bot" && "mr-auto",
+        from === "user" && "translate-x-[30px] bg-[#224E38]"
+      )}
+    >
       <div>
         <Avatar
           className={twMerge(
@@ -85,10 +95,8 @@ function Message({ from, message }) {
             from === "user" && "ml-auto "
           )}
         >
-          <AvatarImage
-            src={from === "bot" ? "/svg/ai.svg" : userImage}
-          />
-            </ Avatar>
+          <AvatarImage src={from === "bot" ? "/svg/ai.svg" : userImage} />
+        </Avatar>
       </div>
       <div
         className={twMerge(

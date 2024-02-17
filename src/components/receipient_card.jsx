@@ -1,32 +1,47 @@
-"use client"
+"use client";
 import axios from "axios";
 import { LocateFixed, Check } from "lucide-react";
 import Link from "next/link";
+import { Badge } from "./ui/badge";
+import { cn } from "@/lib/utils";
+
 
 const Receipientcard = ({ name, createdAt, quantity, id, coord}) => {
-  async function handleConfirmPickup() {
-    try{
-      const res = await axios.post("/api/pickup", {
-        requestId: id
-      })
 
-      window.location.reload()
-    }catch(e){
-      console.log(e)
+  async function handleConfirmPickup() {
+    try {
+      const res = await axios.post("/api/pickup", {
+        requestId: id,
+      });
+
+      window.location.reload();
+    } catch (e) {
+      console.log(e);
     }
   }
   const [lat, lon] = coord
   const mapUrl = `https://maps.google.com/?q=${lat},${lon}`
   return (
-    <div className="flex flex-col rounded-lg p-5 mt-5" style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.25)" }}
+    <div
+      className="flex flex-col rounded-lg p-5 mt-5"
+      style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.25)" }}
     >
-      <div
-        className=" flex justify-between w-full items-center"
-      >
+      <div className=" flex justify-between w-full items-center">
         <div className="">
           <div>
             <h3 className="font-medium text-lg text-left">{name}</h3>
-            <p className="text-[#8E8E8E] text-xs">Prepared on : {createdAt}</p>
+            <p className="text-[#8E8E8E] text-xs">
+              Prepared on : {date}
+            </p>
+            <Badge
+              className={cn(
+                "mt-2",
+                type === "veg" && "bg-green-500",
+                type === "non-veg" && "bg-red-500"
+              )}
+            >
+              {type}
+            </Badge>
           </div>
           <div>
             <div>
@@ -50,7 +65,7 @@ const Receipientcard = ({ name, createdAt, quantity, id, coord}) => {
         </div>
       </div>
       <button
-      onClick={handleConfirmPickup}
+        onClick={handleConfirmPickup}
         style={{ border: "1px solid #224E38" }}
         className="flex items-center gap-4 rounded-md px-4 mt-5 p-2 justify-center"
       >
