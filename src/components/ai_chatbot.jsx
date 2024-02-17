@@ -11,29 +11,35 @@ import axios from "axios";
 function AiChatBot() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const messages = [
+  const [messages, setMessages] = useState([
     {
-        from:"user",
-        message:"How are you ?"
-    },
-    {
-        from:"bot",
-        message:"I am fine"
+      from:"bot",
+      message:"Hello, I am crumbsAI®. How can I help you ?"
     }
-  ]
+  ])
+
+  const addMessage = (from, message) => {
+    setMessages((prev) => [...prev, { from, message }]);
+  };
+  
+  const url = process.env.NEXT_PUBLIC_GEMINI_API  
+
+  console.log(url)
 
   function handleSubmit(e) {
     e.preventDefault();
-    // setLoading(true);
-    // if(input.trim() === "") return;
-    // addMessage("user", input);
-    // axios.post("https://6e5a-2409-40f3-100b-2c2a-d236-ad14-ace6-d586.ngrok-free.app/chat", {
-    //   message: input,
-    // }).then((res) => {
-    //   addMessage("bot", res.data);
-    // }).catch(err => console.log(err)).finally(() => setLoading(false));
-    // setInput("");
+    console.log("hello")
+    setLoading(true);
+
+    if(input.trim() === "") return;
+    addMessage("user", input);
+
+    axios.post(url + "/chat", {
+      message: input,
+    }).then((res) => {
+      addMessage("bot", res.data);
+    }).catch(err => console.log(err)).finally(() => setLoading(false));
+    setInput("");
   }
   return (
     <main className="mx-6 mt-4">
@@ -66,7 +72,6 @@ function AiChatBot() {
 function Message({ from, message }) {
     const { data } = useSession()
     const userImage = data?.user?.image
-    console.log(userImage)
   return (
     <div className={twMerge("flex flex-col w-[90%] gap-1.5 rounded-[0.9375rem] border border-[#8D8D8D] p-5 text-[0.69156rem]",
     from === "bot" && "mr-auto",
@@ -89,7 +94,7 @@ function Message({ from, message }) {
         className={twMerge(
           "rounded-[1.875rem] flex-grow text-[#A8A8A8] text-sm",
           from === "bot" && "text-left",
-          from === "user" && "text-right"
+          from === "user" && "text-right text-white"
         )}
       >
         {message}
