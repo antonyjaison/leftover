@@ -5,9 +5,14 @@ const FoodRequestSchema = new Schema({
         type: String,
         required: true
     },
-    foodType: {
+    type: {
         type: String,
-        required: true,
+        enum: ["veg", "non-veg"],
+        default: "veg"
+    },
+    category: {
+        type: String,
+        required: true
     },
     userId: {
         type: String,
@@ -23,7 +28,7 @@ const FoodRequestSchema = new Schema({
     },
     status: {
         type: String,
-        enum: ["open", "picking","picked"],
+        enum: ["open", "assigned","closed"],
         default: "open"
     },
     foodPic: {
@@ -38,6 +43,9 @@ const FoodRequestSchema = new Schema({
         required: true
     },
     pickedBy: {
+        type: String,
+    },
+    pickedByUid: {
         type: String,
     }
 }, {

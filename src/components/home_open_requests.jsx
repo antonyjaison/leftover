@@ -1,10 +1,15 @@
+import { auth } from "@/lib/auth";
 import { dbConnect } from "@/lib/db";
 import FoodRequest from "@/models/foodrequest.model";
 import React from "react";
 
 const HomeOpenRequests = async () => {
+  const session = await auth();
   await dbConnect();
-  const count = await FoodRequest.countDocuments({ status: "open" });
+  const count = await FoodRequest.countDocuments({
+    status: "open",
+    userId: session?.user?.id,
+  });
 
   return (
     <div

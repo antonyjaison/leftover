@@ -1,7 +1,19 @@
-import React from "react";
+"use client"
+import axios from "axios";
 import { LocateFixed, Check } from "lucide-react";
 
-const Recepeientcard = () => {
+const Receipientcard = ({ name, createdAt, quantity, id}) => {
+  async function handleConfirmPickup() {
+    try{
+      const res = await axios.post("/api/pickup", {
+        requestId: id
+      })
+
+      window.location.reload()
+    }catch(e){
+      console.log(e)
+    }
+  }
   return (
     <div className="flex flex-col rounded-lg p-5 mt-5" style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.25)" }}
     >
@@ -10,16 +22,15 @@ const Recepeientcard = () => {
       >
         <div className="">
           <div>
-            <h3 className="font-medium text-lg text-left">Veg Biryani</h3>
-            <p className="text-[#8E8E8E] text-xs">Prepared on : 02 Feb 2024</p>
-            <p className="text-[#8E8E8E] text-xs">Qty : 8 Persons</p>
+            <h3 className="font-medium text-lg text-left">{name}</h3>
+            <p className="text-[#8E8E8E] text-xs">Prepared on : {createdAt}</p>
           </div>
           <div>
             <div>
               <p className=" mt-2 text-[#7A7A7A] font-normal text-xs">
                 Portions
               </p>
-              <h3 className="font-medium text-sm text-left">140 kg</h3>
+              <h3 className="font-medium text-sm text-left">{quantity} kg</h3>
             </div>
           </div>
         </div>
@@ -36,6 +47,7 @@ const Recepeientcard = () => {
         </div>
       </div>
       <button
+      onClick={handleConfirmPickup}
         style={{ border: "1px solid #224E38" }}
         className="flex items-center gap-4 rounded-md px-4 mt-5 p-2 justify-center"
       >
@@ -46,4 +58,4 @@ const Recepeientcard = () => {
   );
 };
 
-export default Recepeientcard;
+export default Receipientcard;

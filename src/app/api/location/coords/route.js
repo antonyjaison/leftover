@@ -22,7 +22,6 @@ export const POST = async (req) => {
     url.searchParams.append("q", data.data.address)
     url.searchParams.append("api_key", process.env.GEOCODING_APIKEY)
     
-    console.log(url.href)
     const res = await axios.get(url.href)
 
     if(res.data?.length === 0) {

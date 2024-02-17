@@ -1,10 +1,9 @@
 import React from "react";
 import { Pen, Trash, HelpCircle, LogOut } from "lucide-react";
-import { auth } from "@/lib/auth";
-
+import { auth, signOut } from "@/lib/auth";
+import LogoutButton from "@/components/LogoutButton";
 const page = async () => {
   const { user } = await auth();
-  console.log(user);
 
   return (
     <>
@@ -47,13 +46,7 @@ const page = async () => {
             <p>Help</p>
           </button>
 
-          <button
-            style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.25)" }}
-            className="w-full flex items-center gap-5 bg-white p-5 rounded-2xl"
-          >
-            <LogOut size={30} />
-            <p>Logout</p>
-          </button>
+         <LogoutButton/>
 
           <button
             style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.25)" }}

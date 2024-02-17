@@ -26,7 +26,8 @@ export const POST = async (req) => {
     await dbConnect()
     const foodReq = await FoodRequest.create({
         foodName: parsedData.data.foodName,
-        foodType: parsedData.data.category,
+        type: parsedData.data.type,
+        category: parsedData.data.category,
         userId: session.user.id,
         preparedAt: new Date(),
         quantity: parsedData.data.quantity,
