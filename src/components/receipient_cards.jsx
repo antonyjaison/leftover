@@ -3,6 +3,7 @@ import Receipientcard from "./receipient_card";
 import FoodRequest from "@/models/foodrequest.model";
 
 const ReceipientCards = async () => {
+  await dbConnect();
   const foodRequests = await FoodRequest.find({ status: "open" }).sort({
     createdAt: -1,
   });
