@@ -1,8 +1,11 @@
 import React from 'react'
+import ReceipientCards from '@/components/receipient_cards'
 
 const page = () => {
   return (
-    <div>page</div>
+    <div className=' p-5'>
+      <ReceipientCards/>
+    </div>
   )
 }
 
