@@ -5,9 +5,12 @@ import QuoteSection from "@/components/quote_section";
 import SectionHeader from "@/components/section_header";
 
 import RequestDrawer from "@/components/RequestDrawer";
+import { auth } from "@/lib/auth";
 
 
-export default function Home() {
+export default async function Home() {
+
+  const { user } = await auth()
 
 
   return (
@@ -21,7 +24,7 @@ export default function Home() {
         <SectionHeader name="Insights" isSeeAll={true}/>
       </div>
       <div className="mt-5">
-        <Insights/>
+        <Insights uid={user?.id}/>
       </div>
 
       <div className="mt-10">
