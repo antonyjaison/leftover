@@ -21,6 +21,7 @@ const coordSchema = z.object({
 
 export const POST = async (req) => {
     const data = coordSchema.safeParse(await req.json())
+    console.log(data)
     if (!data.success) {
         return NextResponse.json({
             error: data.error.errors[0].message
@@ -33,7 +34,7 @@ export const POST = async (req) => {
     url.searchParams.append("api_key", process.env.GEOCODING_APIKEY)
     
     const res = await axios.get(url.href)
-
+    console.log(res.data?.display_name)
 
     return NextResponse.json({
         address: res.data?.display_name,
