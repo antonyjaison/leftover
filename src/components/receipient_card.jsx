@@ -1,10 +1,13 @@
 "use client";
 import axios from "axios";
 import { LocateFixed, Check } from "lucide-react";
+import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { cn } from "@/lib/utils";
 
-const Receipientcard = ({ name, date, quantity, id, type }) => {
+
+const Receipientcard = ({ name, createdAt, quantity, id, coord}) => {
+
   async function handleConfirmPickup() {
     try {
       const res = await axios.post("/api/pickup", {
@@ -16,6 +19,8 @@ const Receipientcard = ({ name, date, quantity, id, type }) => {
       console.log(e);
     }
   }
+  const [lat, lon] = coord
+  const mapUrl = `https://maps.google.com/?q=${lat},${lon}`
   return (
     <div
       className="flex flex-col rounded-lg p-5 mt-5"
@@ -53,10 +58,10 @@ const Receipientcard = ({ name, date, quantity, id, type }) => {
             className=" w-[100px] object-cover rounded-md"
             src="/images/map.png"
             alt="map"
-          />
-          <button className="rounded-md bg-[#224E38] text-white text-xs flex items-center p-2 absolute bottom-2 right-2">
+            />
+          <a href={mapUrl} target="_blank" className="rounded-md bg-[#224E38] text-white text-xs flex items-center p-2 absolute bottom-2 right-2">
             <LocateFixed size={20} />
-          </button>
+          </a>
         </div>
       </div>
       <button
