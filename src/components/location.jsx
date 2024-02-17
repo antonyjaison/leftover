@@ -10,7 +10,6 @@ const Location = () => {
 
   const getCurrentLocation = async () => {
     const { latitude, longitude } = location;
-    console.log("hello");
 
     try {
       const res = await axios.post("/api/location/address", {

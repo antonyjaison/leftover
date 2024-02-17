@@ -17,27 +17,28 @@ import { requestSchema } from "@/lib/validation";
 import axios from "axios";
 import { useRef } from "react";
 import { revalidatePath } from "next/cache";
+import { Combobox } from "./ComboBox";
 
 function RequestDrawer() {
   const closeBtnRef = useRef(null);
-  const { register, handleSubmit, reset } = useForm({
+  const { register, handleSubmit, reset, setValue } = useForm({
     defaultValues: {
       foodName: "",
       category: "",
+      type: "veg",
       quantity: 0,
       location: "",
     },
   });
 
   const submitForm = async (data) => {
-    console.log(data);
     const parsedData = requestSchema.safeParse(data);
     if (!parsedData.success) {
       console.log(parsedData.error);
       return;
     }
 
-    let refresh = false
+    let refresh = false;
 
     try {
       const resCoords = await axios.post("/api/location/coords", {
@@ -56,7 +57,7 @@ function RequestDrawer() {
 
         toast.success("Request added successfully");
         console.log(res.data);
-        refresh = true
+        refresh = true;
       } catch (e) {
         toast.error(e.message.data?.error);
       }
@@ -66,7 +67,7 @@ function RequestDrawer() {
     }
 
     if (refresh) {
-      window.location.reload()
+      window.location.reload();
     }
   };
   return (
@@ -88,6 +89,19 @@ function RequestDrawer() {
                 placeholder="Food name"
                 type="text"
                 {...register("foodName", { required: true })}
+              />
+              <Combobox
+                values={[
+                  {
+                    value: "veg",
+                    label: "Vegetarian",
+                  },
+                  {
+                    value: "non-veg",
+                    label: "Non Vegetarian",
+                  },
+                ]}
+                onChange={(val) => setValue("type", val)}
               />
               <InputBox
                 placeholder="Category"

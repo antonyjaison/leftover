@@ -3,7 +3,6 @@ import FoodRequest from "@/models/foodrequest.model"
 import { NextResponse } from "next/server"
 import { z } from "zod"
 
-c
 
 const pickupSchema = z.object({
     requestId: z.string(),
@@ -23,8 +22,9 @@ export const POST = async (req) => {
     if (request.status === "closed") {
         return NextResponse.json({ error: "request already picked"}, { status: 400 })
     }
-    request.status = "closed"
-    request.pickedBy = session?.user?.id
+    request.status = "assigned"
+    request.pickedBy = session?.user?.name
+    request.pickedByUid = session?.user?.id
     await request.save()
     return NextResponse.json({ message: "request picked" })
 }

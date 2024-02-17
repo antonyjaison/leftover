@@ -1,7 +1,14 @@
 import { cn } from "@/lib/utils";
+import { Badge } from "./ui/badge";
 
-export const RequestCard = ({ name, quantity, date, status, pickedBy }) => {
-  console.log(pickedBy)
+export const RequestCard = ({
+  name,
+  quantity,
+  date,
+  status,
+  pickedBy,
+  type,
+}) => {
   return (
     <div
       style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.25)" }}
@@ -10,6 +17,15 @@ export const RequestCard = ({ name, quantity, date, status, pickedBy }) => {
       <div className={cn(status === "open" && "mb-6")}>
         <h3 className="font-medium text-lg text-left">Pickup for {name}</h3>
         <p className="text-[#8E8E8E] text-xs">{date}</p>
+        <Badge
+          className={cn(
+            "mt-2",
+            type === "veg" && "bg-green-500",
+            type === "non-veg" && "bg-red-500"
+          )}
+        >
+          {type}
+        </Badge>
       </div>
       <div>
         <div>
@@ -20,9 +36,7 @@ export const RequestCard = ({ name, quantity, date, status, pickedBy }) => {
               </p>
               <div className="flex gap-1">
                 <img src="/svg/profile_icon.svg" alt="" />
-                <h3 className="font-medium text-sm text-left">
-                  {pickedBy} 
-                </h3>
+                <h3 className="font-medium text-sm text-left">{pickedBy}</h3>
               </div>
             </>
           )}

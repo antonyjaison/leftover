@@ -8,6 +8,9 @@ export const requestSchema = z.object({
     }).max(50, {
         message: "Food name must be at most 50 characters long",
     }),
+    type: z.enum(["veg", "non-veg"], {
+        required_error: "Type is required",
+    }),
     category: z.string({
         required_error: "Category is required",
     }).min(3, {
