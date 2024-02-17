@@ -2,6 +2,7 @@
 import axios from "axios";
 import { LocateFixed, Check } from "lucide-react";
 import { Badge } from "./ui/badge";
+import { cn } from "@/lib/utils";
 
 const Receipientcard = ({ name, date, quantity, id, type }) => {
   async function handleConfirmPickup() {
