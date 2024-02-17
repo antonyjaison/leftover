@@ -7,9 +7,7 @@ const QuoteSection = () => {
       className=" w-full rounded-lg p-5 mt-5 flex justify-center items-center min-h-[120px]"
     >
       <h4 className="text-[#1A1A1A] text-lg font-medium">
-        “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-        efficitur leo malesuada est mollis feugiat. Nulla gravida volutpat odio,
-        et vestibulum elit euismod at.”
+      "One-third of all food produced globally is lost or wasted each year." - Food and Agriculture Organization of the United Nations
       </h4>
     </div>
   );
