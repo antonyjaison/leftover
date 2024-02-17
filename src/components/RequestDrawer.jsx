@@ -1,29 +1,72 @@
-import React, { useEffect, useState } from "react";
+"use client";
+
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "./ui/drawer";
 import InputBox from "./input_box";
+import { useForm } from "react-hook-form";
 import { Plus } from "lucide-react";
+import { toast } from "sonner";
+import { requestSchema } from "@/lib/validation";
+import axios from "axios";
+import { useRef } from "react";
+import { revalidatePath } from "next/cache";
 
 function RequestDrawer() {
-  const [foodName, setFoodName] = useState("");
-  const [category, setCategory] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [preparationTime, setPreparationTime] = useState("");
-  const [location, setLocation] = useState("");
+  const closeBtnRef = useRef(null);
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      foodName: "",
+      category: "",
+      quantity: 0,
+      location: "",
+    },
+  });
 
-  const submitForm = () => {
-    if (foodName && category && quantity && preparationTime && location) {
-      // api call to submit the form
-    } else {
-      alert("Enter all fields to submit the form");
+  const submitForm = async (data) => {
+    console.log(data);
+    const parsedData = requestSchema.safeParse(data);
+    if (!parsedData.success) {
+      console.log(parsedData.error);
+      return;
+    }
+
+    let refresh = false
+
+    try {
+      const resCoords = await axios.post("/api/location/coords", {
+        address: parsedData.data.location,
+      });
+      try {
+        const res = await axios.post("/api/food-request", {
+          ...parsedData.data,
+          coord: {
+            lat: resCoords.data.lat,
+            lon: resCoords.data.lon,
+          },
+        });
+        reset();
+        closeBtnRef.current?.click();
+
+        toast.success("Request added successfully");
+        console.log(res.data);
+        refresh = true
+      } catch (e) {
+        toast.error(e.message.data?.error);
+      }
+    } catch (e) {
+      toast.error(e.response.data?.error);
+      return;
+    }
+
+    if (refresh) {
+      window.location.reload()
     }
   };
   return (
@@ -39,51 +82,42 @@ function RequestDrawer() {
             <hr className="w-full h-[1px] mt-5" />
           </DrawerTitle>
 
+          <form onSubmit={handleSubmit(submitForm)}>
             <div className="flex flex-col gap-7 py-8">
               <InputBox
                 placeholder="Food name"
-                value={foodName}
                 type="text"
-                onChange={(e) => setFoodName(e.target.value)}
+                {...register("foodName", { required: true })}
               />
               <InputBox
                 placeholder="Category"
-                value={category}
                 type="text"
-                onChange={(e) => setCategory(e.target.value)}
+                {...register("category", { required: true })}
               />
               <InputBox
                 placeholder="Quantity"
-                value={quantity}
                 type="number"
-                onChange={(e) => setQuantity(e.target.value)}
-              />
-              <InputBox
-                placeholder="Preparation time"
-                value={preparationTime}
-                type="text"
-                onChange={(e) => setPreparationTime(e.target.value)}
+                inputMode="numeric"
+                {...register("quantity", { required: true })}
               />
               <InputBox
                 placeholder="Location"
-                value={location}
                 type="text"
-                onChange={(e) => setLocation(e.target.value)}
+                {...register("location", { required: true })}
               />
             </div>
 
             <button
-              onClick={() => submitForm()}
+              onClick={handleSubmit(submitForm)}
               className="w-full rounded-md p-4 bg-[#224E38] text-white text-lg"
             >
               Confirm
             </button>
+          </form>
         </DrawerHeader>
 
         <DrawerFooter>
-          <DrawerClose>
-            Cancel
-          </DrawerClose>
+          <DrawerClose ref={closeBtnRef}>Cancel</DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

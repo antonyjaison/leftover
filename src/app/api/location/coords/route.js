@@ -33,5 +33,5 @@ export const POST = async (req) => {
     return NextResponse.json({
         lat: res.data[0].lat,
         lon: res.data[0].lon
-    })
+    }, { status: 200 })
 }
